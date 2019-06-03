@@ -18,13 +18,13 @@ for x in range(0, 10):
 
 class NOTE(notes_pb2_grpc.NoteServiceServicer):
     def list(self, request, context):
-        return list_notas
+        return notes_pb2.NoteList(notes=list_notas)
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     notes_pb2_grpc.add_NoteServiceServicer_to_server(NOTE(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('localhost:50051')
     server.start()
     try:
         while True:
