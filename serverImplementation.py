@@ -20,6 +20,14 @@ class NOTE(notes_pb2_grpc.NoteServiceServicer):
     def list(self, request, context):
         return notes_pb2.NoteList(notes=list_notas)
 
+    def insert(self, request, context):
+        notaAux = notes_pb2.Note()
+        notaAux.id = '5000'
+        notaAux.title = request.title
+        notaAux.content = request.content
+        list_notas.append(notaAux)
+        return notaAux
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
